@@ -1,5 +1,11 @@
 import { Obj, pipe, tap } from 'lil-fp'
-import { Project as TsProject, type ProjectOptions as TsProjectOptions, ScriptKind } from 'ts-morph'
+import {
+  Project as TsProject,
+  type ProjectOptions as TsProjectOptions,
+  ScriptKind,
+  SourceFile,
+  FileSystemRefreshResult,
+} from 'ts-morph'
 import { createParser, type ParserOptions } from './parser'
 import { ParserResult } from './parser-result'
 import type { PandaHookable } from '@pandacss/types'
@@ -28,7 +34,7 @@ const createTsProject = (options: Partial<TsProjectOptions>) =>
 export const createProject = ({ getFiles, readFile, parserOptions, hooks, ...projectOptions }: ProjectOptions) =>
   pipe(
     {
-      project: createTsProject(projectOptions),
+      project: createTsProject(projectOptions) as TsProject,
       parser: createParser(parserOptions),
     },
 
@@ -42,12 +48,12 @@ export const createProject = ({ getFiles, readFile, parserOptions, hooks, ...pro
         project.createSourceFile(filePath, readFile(filePath), {
           overwrite: true,
           scriptKind: ScriptKind.TSX,
-        }),
+        }) as SourceFile,
       addSourceFile: (filePath: string, content: string) =>
         project.createSourceFile(filePath, content, {
           overwrite: true,
           scriptKind: ScriptKind.TSX,
-        }),
+        }) as SourceFile,
       parseSourceFile: (filePath: string) => {
         if (filePath.endsWith('.json')) {
           const content = readFile(filePath)
@@ -80,7 +86,8 @@ export const createProject = ({ getFiles, readFile, parserOptions, hooks, ...pro
     }),
 
     Obj.assign(({ getSourceFile, project }) => ({
-      reloadSourceFile: (filePath: string) => getSourceFile(filePath)?.refreshFromFileSystemSync(),
+      reloadSourceFile: (filePath: string) =>
+        getSourceFile(filePath)?.refreshFromFileSystemSync() as FileSystemRefreshResult | undefined,
       reloadSourceFiles: () => {
         const files = getFiles()
         for (const file of files) {

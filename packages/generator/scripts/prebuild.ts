@@ -4,10 +4,14 @@ import { basename, dirname, join } from 'path'
 function getEntrypoint(pkg: string, file: string) {
   const entry = require.resolve(pkg)
   const isDist = entry.includes('dist')
-  if (!isDist) {
-    return join(dirname(entry), 'src', file)
+  const isType = pkg.includes('/types')
+  if (isType) {
+    return join(dirname(entry), '../dist', file)
   }
-  return join(dirname(entry), file)
+  if (!isDist) {
+    return join(dirname(entry), '../dist', file)
+  }
+  return join(dirname(entry), '../dist', file)
 }
 
 const fileMap = [

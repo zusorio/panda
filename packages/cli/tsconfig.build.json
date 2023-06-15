@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig.build.json",
   "include": ["src"],
+  "exclude": ["node_modules"],
   "compilerOptions": {
     "composite": true,
     "rootDir": "src",
@@ -8,10 +9,15 @@
   },
   "references": [
     // dependencies
+    { "path": "../config/tsconfig.json" },
     { "path": "../error/tsconfig.json" },
     { "path": "../logger/tsconfig.json" },
+    { "path": "../node/tsconfig.json" },
+    { "path": "../shared/tsconfig.json" },
+    { "path": "../token-dictionary/tsconfig.json" },
+    { "path": "../types/tsconfig.json" },
+    // devDependencies
     { "path": "../preset-base/tsconfig.json" },
-    { "path": "../preset-panda/tsconfig.json" },
-    { "path": "../types/tsconfig.json" }
+    { "path": "../preset-panda/tsconfig.json" }
   ]
 }

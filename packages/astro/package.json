@@ -7,9 +7,8 @@
   "types": "dist/index.d.ts",
   "author": "Segun Adebayo <joseshegs@gmail.com>",
   "scripts": {
-    "build": "tsup --dts",
-    "build-fast": "tsup --no-dts",
-    "dev": "pnpm build-fast --watch"
+    "build": "tsup",
+    "dev": "pnpm build --watch"
   },
   "sideEffects": false,
   "publishConfig": {

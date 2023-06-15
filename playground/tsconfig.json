@@ -26,5 +26,15 @@
     ]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "references": [
+    // dependencies
+    { "path": "../packages/generator/tsconfig.json" },
+    { "path": "../packages/parser/tsconfig.json" },
+    { "path": "../packages/preset-base/tsconfig.json" },
+    { "path": "../packages/preset-panda/tsconfig.json" },
+    // devDependencies
+    { "path": "../packages/cli/tsconfig.build.json" },
+    { "path": "../packages/types/tsconfig.json" }
+  ]
 }

@@ -2,15 +2,10 @@ import { CompletionItem, CompletionItemKind, Position, Range } from 'vscode-lang
 import { TextDocument } from 'vscode-languageserver-textdocument'
 import { type PandaExtensionSetup } from '../setup-builder'
 
-import {
-  type Dict,
-  type ParserResultType,
-  type RawCondition,
-  type ResultItem,
-  type SystemStyleObject,
-} from '@pandacss/types'
+import { type Dict, type RawCondition, type ResultItem, type SystemStyleObject } from '@pandacss/types'
 import { CallExpression, Identifier, JsxOpeningElement, JsxSelfClosingElement, Node, SourceFile, ts } from 'ts-morph'
 
+import { type PandaVSCodeSettings } from '@pandacss/extension-shared'
 import {
   BoxNodeArray,
   BoxNodeLiteral,
@@ -28,11 +23,10 @@ import {
   type Unboxed,
 } from '@pandacss/extractor'
 import { type PandaContext } from '@pandacss/node'
-import { walkObject } from '@pandacss/shared'
 import { type ParserResult } from '@pandacss/parser'
+import { walkObject } from '@pandacss/shared'
 import { type Token } from '@pandacss/token-dictionary'
 import { Bool } from 'lil-fp'
-import { type PandaVSCodeSettings } from '@pandacss/extension-shared'
 import { match } from 'ts-pattern'
 import { color2kToVsCodeColor } from './color2k-to-vscode-color'
 import { expandTokenFn, extractTokenPaths } from './expand-token-fn'
@@ -60,6 +54,7 @@ type ClosestToken = ClosestTokenMatch | ClosestConditionMatch
 type ClosestInstanceMatch = { name: string }
 type ClosestStylesInstance = { kind: 'styles'; props: BoxNodeMap | BoxNodeObject }
 type ClosestInstance = ClosestInstanceMatch & ClosestStylesInstance
+type ClosestStylesInstanceWithStyles = ClosestInstance & { styles: Dict }
 
 type OnTokenCallback = (args: ClosestToken) => void
 type BoxNodeWithValue = BoxNodeObject | BoxNodeLiteral | BoxNodeMap | BoxNodeArray
@@ -146,7 +141,7 @@ export function setupTokensHelpers(setup: PandaExtensionSetup) {
     const ctx = setup.getContext()
     if (!ctx)
       return () => {
-        //
+        // ignore
       }
 
     return (result: ResultItem) => {
@@ -178,7 +173,7 @@ export function setupTokensHelpers(setup: PandaExtensionSetup) {
   /**
    * Get all the tokens from the document and call a callback on it.
    */
-  function getFileTokens(_doc: TextDocument, parserResult: ParserResultType, onToken: OnTokenCallback) {
+  function getFileTokens(_doc: TextDocument, parserResult: ParserResult, onToken: OnTokenCallback) {
     const ctx = setup.getContext()
     if (!ctx) return
 
@@ -334,7 +329,7 @@ export function setupTokensHelpers(setup: PandaExtensionSetup) {
       .otherwise(() => {
         //
         return undefined
-      })
+      }) as Return
   }
 
   const getClosestToken = (doc: TextDocument, position: Position): ClosestToken | undefined => {
@@ -371,7 +366,7 @@ export function setupTokensHelpers(setup: PandaExtensionSetup) {
     })
   }
 
-  const getClosestInstance = (doc: TextDocument, position: Position) => {
+  const getClosestInstance = (doc: TextDocument, position: Position): ClosestStylesInstanceWithStyles | undefined => {
     const ctx = setup.getContext()
     if (!ctx) return
 
@@ -391,17 +386,17 @@ export function setupTokensHelpers(setup: PandaExtensionSetup) {
           name,
           props,
           styles: Object.assign({}, className, css, rest),
-        } as ClosestStylesInstance & { styles: Dict }
+        } as ClosestStylesInstanceWithStyles | undefined
       }
     })
   }
 
   const getClosestCompletionList = async (doc: TextDocument, position: Position) => {
     const ctx = setup.getContext()
-    if (!ctx) return
+    if (!ctx) return []
 
     const match = getNodeAtPosition(doc, position)
-    if (!match) return
+    if (!match) return []
 
     const settings = await setup.getPandaSettings()
     const { node, stack } = match
@@ -519,7 +514,7 @@ const getCompletionFor = (
   propName: string,
   propNode: BoxNodeLiteral,
   settings: PandaVSCodeSettings,
-) => {
+): CompletionItem[] => {
   const propValue = propNode.value
 
   let str = String(propValue)

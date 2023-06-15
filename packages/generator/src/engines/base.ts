@@ -110,3 +110,5 @@ export const getBaseEngine = (conf: ConfigResultWithHooks) => {
     createSheet,
   }
 }
+
+export type BaseEngine = ReturnType<typeof getBaseEngine>

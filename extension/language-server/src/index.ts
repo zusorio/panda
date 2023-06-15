@@ -23,7 +23,7 @@ const documents = new TextDocuments(TextDocument)
 let isDebug = false
 
 // Deferred promise to wait for extension to have resolved all the workspaces configs
-let resolveDeferred: (value?: unknown) => void
+let resolveDeferred: (value?: any) => void
 const deferred = new Promise((resolve) => {
   resolveDeferred = resolve
 })

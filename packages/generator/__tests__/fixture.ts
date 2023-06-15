@@ -10,6 +10,7 @@ import {
 } from '@pandacss/fixture'
 import { createGenerator } from '../src'
 import { createHooks } from 'hookable'
+import { type Context } from '../src/engines'
 
 export const generator = createGenerator({
   dependencies: [],
@@ -35,4 +36,4 @@ export const generator = createGenerator({
   },
   path: '',
   hooks: createHooks(),
-})
+}) as unknown as Context

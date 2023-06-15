@@ -9,11 +9,10 @@ import {
   utilities,
 } from '@pandacss/fixture'
 import { createGenerator } from '@pandacss/generator'
-import type { LoadConfigResult, PandaHooks } from '@pandacss/types'
-import { type UserConfig } from '@pandacss/types'
+import type { LoadConfigResult, PandaHooks, UserConfig } from '@pandacss/types'
+import { createHooks } from 'hookable'
 import { createProject } from '../src'
 import { getImportDeclarations } from '../src/import'
-import { createHooks } from 'hookable'
 
 const staticFilePath = 'test.tsx'
 

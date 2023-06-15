@@ -11,19 +11,19 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsup src/index.ts --format=esm,cjs --dts",
-    "build-fast": "tsup src/index.ts --format=esm,cjs --no-dts",
-    "dev": "pnpm build-fast --watch"
+    "build": "tsup src/index.ts --format=esm,cjs",
+    "build-dts": "tsc -b --emitDeclarationOnly",
+    "dev": "pnpm build --watch"
   },
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@pandacss/types": "workspace:*",
     "@pandacss/shared": "workspace:*",
     "ts-pattern": "4.3.0"
   },
   "devDependencies": {
+    "@pandacss/token-types": "workspace:*",
     "@pandacss/fixture": "workspace:*"
   }
 }

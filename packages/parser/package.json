@@ -11,16 +11,15 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsup src/index.ts --format=esm,cjs --dts",
-    "build-fast": "tsup src/index.ts --format=esm,cjs --no-dts",
-    "dev": "pnpm build-fast --watch"
+    "build": "tsup src/index.ts --format=esm,cjs",
+    "build-dts": "tsc -b --emitDeclarationOnly",
+    "dev": "pnpm build --watch"
   },
   "dependencies": {
     "@pandacss/extractor": "workspace:*",
     "@pandacss/is-valid-prop": "workspace:*",
     "@pandacss/logger": "workspace:*",
     "@pandacss/shared": "workspace:*",
-    "@pandacss/types": "workspace:*",
     "lil-fp": "1.4.5",
     "ts-morph": "18.0.0",
     "ts-pattern": "4.3.0"
@@ -28,6 +27,7 @@
   "devDependencies": {
     "@pandacss/fixture": "workspace:*",
     "@pandacss/generator": "workspace:*",
+    "@pandacss/types": "workspace:*",
     "hookable": "5.5.3"
   },
   "files": [

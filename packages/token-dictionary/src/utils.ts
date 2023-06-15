@@ -1,5 +1,5 @@
 import { isObject } from '@pandacss/shared'
-import type { Token } from '@pandacss/types'
+import type { Token } from '@pandacss/token-types'
 
 /* -----------------------------------------------------------------------------
  * Token references

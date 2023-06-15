@@ -16,9 +16,9 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsup src/cli-*.ts src/index.ts --format=cjs --dts --shims --clean",
-    "build-fast": "tsup src/cli-*.ts src/index.ts --format=cjs --no-dts --shims",
-    "dev": "pnpm build-fast --watch",
+    "build": "tsup src/cli-*.ts src/index.ts --format=cjs --shims --clean",
+    "dev": "pnpm build --watch",
+    "build-dts": "tsc -b --emitDeclarationOnly",
     "clean": "rm -rf dist"
   },
   "devDependencies": {

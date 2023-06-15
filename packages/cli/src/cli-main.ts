@@ -18,6 +18,7 @@ import { cac } from 'cac'
 import { readFileSync } from 'fs'
 import path, { join } from 'path'
 import updateNotifier from 'update-notifier'
+// @ts-ignore
 import packageJson from '../package.json' assert { type: 'json' }
 
 export async function main() {

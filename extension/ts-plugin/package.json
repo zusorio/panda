@@ -17,9 +17,9 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format=cjs --dts",
-    "build-fast": "tsup src/index.ts --format=cjs --no-dts",
-    "dev": "pnpm build-fast --watch"
+    "build": "tsup src/index.ts --format=cjs",
+    "build-dts": "tsc -b --emitDeclarationOnly",
+    "dev": "pnpm build --watch"
   },
   "devDependencies": {
     "typescript": "^5.1.3"

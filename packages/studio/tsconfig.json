@@ -3,5 +3,15 @@
   "include": ["src", "index.ts"],
   "compilerOptions": {
     "jsx": "react-jsx"
-  }
+  },
+  "references": [
+    { "path": "../../packages/config/tsconfig.json" },
+    { "path": "../../packages/shared/tsconfig.json" },
+    { "path": "../../packages/token-dictionary/tsconfig.json" },
+    { "path": "../../packages/logger/tsconfig.json" },
+    { "path": "../../packages/node/tsconfig.json" },
+    // devDependencies
+    { "path": "../../packages/cli/tsconfig.build.json" },
+    { "path": "../../packages/types/tsconfig.json" }
+  ]
 }

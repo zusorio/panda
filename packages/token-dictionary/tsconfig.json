@@ -1,7 +1,16 @@
 {
-  "extends": "../../tsconfig.json",
-  "include": ["src", "index.ts", "__tests__/alias.test.ts"],
+  "extends": "../../tsconfig.build.json",
+  "include": ["src"],
   "compilerOptions": {
-    "tsBuildInfoFile": "node_modules/.cache/.tsbuildinfo"
-  }
+    "composite": true,
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "references": [
+    // dependencies
+    { "path": "../shared/tsconfig.json" },
+    { "path": "../token-types/tsconfig.json" }
+    // devDependencies
+    // { "path": "../fixture/tsconfig.json" }
+  ]
 }
