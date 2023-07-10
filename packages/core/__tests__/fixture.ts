@@ -3,6 +3,7 @@ import { TokenDictionary } from '@pandacss/token-dictionary'
 import postcss from 'postcss'
 import { Conditions, Utility, Recipes } from '../src'
 import type { StylesheetContext } from '../src/types'
+import type { RecipeConfig } from '@pandacss/types'
 
 type ContextOptions = {
   hash?: boolean
@@ -41,7 +42,7 @@ export function getRecipe(key: 'buttonStyle' | 'textStyle' | 'tooltipStyle') {
   const recipes = new Recipes(mocks.recipes, createContext())
   recipes.save()
   const recipe = recipes.getRecipe(key)
-  return recipe!.config
+  return recipe!.config as RecipeConfig
 }
 
 export function processRecipe(recipe: 'buttonStyle' | 'textStyle' | 'tooltipStyle', value: Record<string, any>) {

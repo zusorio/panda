@@ -1,7 +1,24 @@
 {
-  "extends": "../../tsconfig.json",
-  "include": ["src", "index.ts"],
+  "extends": "../../tsconfig.build.json",
+  "include": ["src"],
   "compilerOptions": {
-    "tsBuildInfoFile": "node_modules/.cache/.tsbuildinfo"
-  }
+    "composite": true,
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "references": [
+    // dependencies
+    { "path": "../config/tsconfig.json" },
+    { "path": "../error/tsconfig.json" },
+    { "path": "../extractor/tsconfig.json" },
+    { "path": "../generator/tsconfig.json" },
+    { "path": "../is-valid-prop/tsconfig.json" },
+    { "path": "../logger/tsconfig.json" },
+    { "path": "../parser/tsconfig.json" },
+    { "path": "../shared/tsconfig.json" },
+    { "path": "../token-dictionary/tsconfig.json" },
+    { "path": "../types/tsconfig.json" },
+    // devDependencies
+    { "path": "../fixture/tsconfig.json" }
+  ]
 }

@@ -7,9 +7,9 @@
   "types": "dist/index.d.ts",
   "author": "Segun Adebayo <joseshegs@gmail.com>",
   "scripts": {
-    "build": "tsup src/index.ts --format=cjs,esm --shims --dts",
-    "build-fast": "tsup src/index.ts --format=cjs,esm --shims --no-dts",
-    "dev": "pnpm build-fast --watch"
+    "build": "tsup src/index.ts --format=cjs,esm --shims ",
+    "build-dts": "tsc -b --emitDeclarationOnly",
+    "dev": "pnpm build --watch"
   },
   "files": [
     "dist"
@@ -52,7 +52,6 @@
     "tsconfck": "^2.1.1"
   },
   "devDependencies": {
-    "@pandacss/fixture": "workspace:*",
     "@types/fs-extra": "11.0.1",
     "@types/glob-parent": "^5.1.1",
     "@types/is-glob": "^4.0.2",

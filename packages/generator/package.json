@@ -12,9 +12,9 @@
   },
   "scripts": {
     "prebuild": "tsx scripts/prebuild.ts",
-    "build": "pnpm prebuild && tsup src/index.ts --format=esm,cjs --dts",
-    "build-fast": "tsup src/index.ts --format=esm,cjs --no-dts",
-    "dev": "tsx scripts/prebuild.ts && pnpm build-fast --watch"
+    "build": "pnpm prebuild && tsup src/index.ts --format=esm,cjs",
+    "build-dts": "tsc -b --emitDeclarationOnly",
+    "dev": "tsx scripts/prebuild.ts && pnpm build --watch"
   },
   "files": [
     "dist"
@@ -25,7 +25,6 @@
     "@pandacss/logger": "workspace:*",
     "@pandacss/shared": "workspace:*",
     "@pandacss/token-dictionary": "workspace:*",
-    "@pandacss/types": "workspace:*",
     "javascript-stringify": "2.1.0",
     "lil-fp": "1.4.5",
     "outdent": " ^0.8.0",
@@ -34,7 +33,7 @@
     "ts-pattern": "4.3.0"
   },
   "devDependencies": {
-    "@pandacss/fixture": "workspace:*",
+    "@pandacss/types": "workspace:*",
     "@types/pluralize": "0.0.29",
     "hookable": "5.5.3"
   }

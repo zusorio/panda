@@ -118,14 +118,17 @@ export class Recipes {
   }
 
   get nodes() {
-    return this.details.map(({ upperName, variantKeys, name, jsx, match }) => ({
-      type: 'recipe' as const,
-      name: upperName,
-      props: variantKeys,
-      baseName: name,
-      jsx,
-      match,
-    }))
+    return this.details.map(
+      ({ upperName, variantKeys, name, jsx, match }) =>
+        ({
+          type: 'recipe' as const,
+          name: upperName,
+          props: variantKeys,
+          baseName: name,
+          jsx,
+          match,
+        } as JsxRecipeNode),
+    )
   }
 
   splitProps = (name: string, props: Dict) => {
@@ -240,4 +243,13 @@ export class Recipes {
     if (!this.context) return ''
     return this.context.root.toString()
   }
+}
+
+export type JsxRecipeNode = {
+  type: 'recipe'
+  name: string
+  props: string[]
+  baseName: string
+  jsx: (string | RegExp)[]
+  match: RegExp
 }

@@ -1,7 +1,17 @@
 {
-  "extends": "../../tsconfig.json",
-  "include": ["src", "index.ts"],
+  "extends": "../../tsconfig.build.json",
+  "include": ["src"],
+  "exclude": ["node_modules"],
   "compilerOptions": {
-    "tsBuildInfoFile": "node_modules/.cache/.tsbuildinfo"
-  }
+    "composite": true,
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "references": [
+    // devDependencies
+    { "path": "../../packages/core/tsconfig.json" },
+    { "path": "../../packages/extractor/tsconfig.json" },
+    { "path": "../../packages/node/tsconfig.json" },
+    { "path": "../../packages/shared/tsconfig.json" }
+  ]
 }

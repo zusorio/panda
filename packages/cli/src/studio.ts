@@ -9,7 +9,7 @@ export type BuildOpts = {
 
 const require = createRequire(import.meta.url)
 const astroBin = require.resolve('astro')
-const appPath = join(__dirname, '..')
+const appPath = join(__dirname, '../../studio')
 
 export async function buildStudio({ outDir }: BuildOpts) {
   process.env.ASTRO_OUT_DIR = outDir

@@ -6,13 +6,13 @@
   "scripts": {
     "playground": "pnpm --filter=./playground",
     "build:playground": "pnpm --filter {./playground}... build",
-    "prepare": "husky install && pnpm build-fast",
+    "prepare": "husky install && pnpm build",
     "dev": "pnpm -r --parallel --filter=./packages/** --filter=./extension/** dev",
-    "build-fast": "pnpm -r --parallel --filter=./packages/** build-fast",
-    "build": "pnpm -r --parallel --filter=./packages/** --filter=./extension/** build",
-    "check": "pnpm build && pnpm typecheck && pnpm lint && pnpm test run",
-    "clean": "pnpm -r --parallel exec rimraf dist .turbo *.log",
-    "reset": "pnpm -r --parallel exec rimraf node_modules && rimraf node_modules",
+    "build-dts": "pnpm -r --filter=./packages/** build-dts",
+    "build": "pnpm -r --filter=./packages/** --filter=./extension/** build",
+    "check": "pnpm build && pnpm build-dts && pnpm lint && pnpm test run",
+    "clean": "pnpm -r --parallel exec rimraf dist .turbo *.log tsconfig.tsbuildinfo",
+    "reset": "pnpm -r --parallel exec rimraf node_modules",
     "test": "vitest",
     "test-watch": "vitest --watch -u",
     "lint": "eslint packages --ext .ts",
@@ -21,7 +21,7 @@
     "typecheck": "tsc --noEmit",
     "release": "changeset publish",
     "release-dev": "changeset version --snapshot dev && changeset publish --tag dev",
-    "prepare-studio": "pnpm --filter=./packages/studio codegen",
+    "prepare-studio": "node packages/cli/dist/cli-default.js codegen --cwd ./packages/studio",
     "build-studio": "pnpm --filter=./sandbox/vite-ts exec pnpm panda studio --build",
     "deploy-studio": "pnpm prepare-studio && pnpm build-studio",
     "serve-studio": "npx serve ./sandbox/vite-ts/panda-static",
@@ -65,6 +65,7 @@
     }
   },
   "devDependencies": {
+    "@pandacss/fixture": "workspace:^",
     "mdx-local-link-checker": "^2.1.1",
     "rimraf": "^5.0.1"
   }

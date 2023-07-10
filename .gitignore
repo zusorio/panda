@@ -13,6 +13,7 @@ out
 build
 **/buil
 tsconfig.tsbuildinfo
+tsconfig.build.tsbuildinfo
 .DS_Store
 __generated__
 *.env
@@ -22,6 +23,7 @@ __generated__
 ## Panda
 styled-system
 styled-system-static
+styled-system-studio
 panda
 panda-static
 

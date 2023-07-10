@@ -1,7 +1,20 @@
 {
-  "extends": "../../tsconfig.json",
-  "include": ["src", "index.ts"],
+  "extends": "../../tsconfig.build.json",
+  "include": ["src"],
+  "exclude": ["node_modules"],
   "compilerOptions": {
-    "tsBuildInfoFile": "node_modules/.cache/.tsbuildinfo"
-  }
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "references": [
+    // dependencies
+    { "path": "../../packages/cli/tsconfig.build.json" },
+    { "path": "../../extension/ts-plugin/tsconfig.json" },
+    { "path": "../../packages/preset-base/tsconfig.json" },
+    { "path": "../../packages/preset-panda/tsconfig.json" },
+    // devDependencies
+    { "path": "../../extension/shared/tsconfig.json" },
+    { "path": "../../extension/language-server/tsconfig.json" },
+    { "path": "../../extension/vsix-builder/tsconfig.json" }
+  ]
 }

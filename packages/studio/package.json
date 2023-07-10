@@ -11,10 +11,7 @@
   },
   "scripts": {
     "codegen": "panda",
-    "build": "tsup scripts --format=esm,cjs --dts --no-splitting --shims",
     "postbuild": "panda",
-    "build-fast": "tsup scripts --format=esm,cjs --no-dts --no-splitting --shims",
-    "dev": "pnpm build-fast --watch scripts",
     "dev:panda": "panda --clean --watch",
     "dev:astro": "astro dev",
     "start": "concurrently \"pnpm dev:panda\" \"pnpm dev:astro\""
@@ -38,7 +35,6 @@
   "dependencies": {
     "@ark-ui/react": "0.7.2",
     "@astrojs/react": "2.2.1",
-    "@pandacss/types": "workspace:*",
     "@pandacss/config": "workspace:*",
     "@pandacss/shared": "workspace:*",
     "@pandacss/token-dictionary": "workspace:*",
@@ -51,7 +47,7 @@
     "vite": "4.3.9"
   },
   "devDependencies": {
-    "@pandacss/dev": "workspace:*",
+    "@pandacss/types": "workspace:*",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
     "@vitejs/plugin-react": "4.0.1",

@@ -1,7 +1,14 @@
 {
-  "extends": "../../tsconfig.json",
-  "include": ["src", "index.ts"],
+  "extends": "../../tsconfig.build.json",
+  "include": ["src"],
   "compilerOptions": {
-    "tsBuildInfoFile": "node_modules/.cache/.tsbuildinfo"
-  }
+    "composite": true,
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "references": [
+    // dependencies
+    { "path": "../extractor/tsconfig.json" },
+    { "path": "../token-dictionary/tsconfig.json" }
+  ]
 }

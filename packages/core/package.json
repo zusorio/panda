@@ -7,9 +7,9 @@
   "types": "dist/index.d.ts",
   "author": "Segun Adebayo <joseshegs@gmail.com>",
   "scripts": {
-    "build": "tsup --entry src/index.ts --entry src/classname.ts --format=esm,cjs --dts",
-    "build-fast": "tsup --entry src/index.ts --entry src/classname.ts --format=esm,cjs --no-dts",
-    "dev": "pnpm build-fast --watch"
+    "build": "tsup --entry src/index.ts --entry src/classname.ts --format=esm,cjs",
+    "build-dts": "tsc -b --emitDeclarationOnly",
+    "dev": "pnpm build --watch"
   },
   "files": [
     "dist"
@@ -20,9 +20,8 @@
   },
   "dependencies": {
     "@pandacss/error": "workspace:*",
-    "@pandacss/types": "workspace:*",
-    "@pandacss/shared": "workspace:*",
     "@pandacss/logger": "workspace:*",
+    "@pandacss/shared": "workspace:*",
     "@pandacss/token-dictionary": "workspace:*",
     "hookable": "5.5.3",
     "postcss": "8.4.24",
@@ -37,7 +36,7 @@
     "lodash.merge": "4.6.2"
   },
   "devDependencies": {
-    "@pandacss/fixture": "workspace:*",
+    "@pandacss/types": "workspace:*",
     "@types/lodash.merge": "4.6.7"
   }
 }

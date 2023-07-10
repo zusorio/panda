@@ -33,10 +33,10 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsup src --format=esm,cjs --dts --no-splitting --shims",
+    "build": "tsup src --format=esm,cjs --no-splitting --shims",
+    "build-dts": "tsc -b --emitDeclarationOnly tsconfig.build.json",
     "postbuild": "pnpm app:gen",
-    "build-fast": "tsup src --format=esm,cjs --no-dts --no-splitting --shims",
-    "dev": "pnpm build-fast --watch src"
+    "dev": "pnpm build --watch src"
   },
   "files": [
     "dist",
@@ -64,6 +64,7 @@
     "perfect-debounce": "^1.0.0"
   },
   "devDependencies": {
+    "@pandacss/types": "workspace:*",
     "@types/update-notifier": "6.0.4",
     "kleur": "4.1.5",
     "update-notifier": "6.0.2"

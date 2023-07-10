@@ -11,9 +11,9 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsup src/index.ts --format=cjs,esm --shims --dts",
-    "build-fast": "tsup src/index.ts --format=cjs,esm --shims --no-dts",
-    "dev": "pnpm build-fast --watch",
+    "build": "tsup src/index.ts --format=cjs,esm --shims ",
+    "build-dts": "tsc -b --emitDeclarationOnly",
+    "dev": "pnpm build --watch",
     "format": "prettier --write \"./{src,tests}/**/*\"",
     "test": "vitest",
     "test:ci": "vitest run",

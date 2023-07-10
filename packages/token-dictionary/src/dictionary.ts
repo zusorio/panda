@@ -1,5 +1,5 @@
 import { compact, isString, mapObject, memo, walkObject } from '@pandacss/shared'
-import type { SemanticTokens, Tokens } from '@pandacss/types'
+import type { SemanticTokens, Tokens } from '@pandacss/token-types'
 import { isMatching, match } from 'ts-pattern'
 import { Token } from './token'
 import { assertTokenFormat, getReferences, isToken } from './utils'

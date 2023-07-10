@@ -14,12 +14,14 @@ import {
   writeAnalyzeJSON,
 } from '@pandacss/node'
 import { compact } from '@pandacss/shared'
-import { buildStudio, previewStudio, serveStudio } from '@pandacss/studio'
+import { buildStudio, previewStudio, serveStudio } from './studio'
 import { cac } from 'cac'
 import { join, resolve } from 'pathe'
 import { debounce } from 'perfect-debounce'
 import updateNotifier from 'update-notifier'
-import { name, version } from '../package.json'
+// @ts-ignore
+import packageJson from '../package.json' assert { type: 'json' }
+const { name, version } = packageJson
 
 export async function main() {
   updateNotifier({ pkg: { name, version }, distTag: 'latest' }).notify()
