@@ -11,8 +11,10 @@ const someRecipe = defineRecipe({
 
 export default defineConfig({
   preflight: true,
+  // hash: true,
   include: ['./src/**/*.{tsx,jsx}', './pages/**/*.{jsx,tsx}'],
   exclude: [],
+  mode: 'grouped',
   outdir: 'styled-system',
   jsxFactory: 'panda',
   jsxFramework: 'react',

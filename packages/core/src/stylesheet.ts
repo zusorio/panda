@@ -1,7 +1,7 @@
 import { logger } from '@pandacss/logger'
 import { getSlotRecipes } from '@pandacss/shared'
 import type { Dict, RecipeConfig, SlotRecipeConfig, SystemStyleObject } from '@pandacss/types'
-import postcss, { CssSyntaxError } from 'postcss'
+import postcss, { CssSyntaxError, rule } from 'postcss'
 import { AtomicRule } from './atomic-rule'
 import { isSlotRecipe } from './is-slot-recipe'
 import { discardDuplicate, expandCssFunctions, optimizeCss } from './optimize'
@@ -62,11 +62,22 @@ export class Stylesheet {
     this.context.root.append(output)
   }
 
-  processAtomic = (...styleObject: (SystemStyleObject | undefined)[]) => {
-    const ruleset = this.context.mode === 'grouped' ? new GroupedRule(this.context) : new AtomicRule(this.context)
-    styleObject.forEach((styles) => {
+  processAtomic = (...list: (SystemStyleObject | GroupedRule | undefined)[]) => {
+    let ruleset: AtomicRule | GroupedRule
+    let identifier: string | undefined
+
+    // If the last item is a GroupedRule, it means we're processing an atomic recipe (cva)
+    // so we should share the same className identifier
+    if (list[list.length - 1] instanceof GroupedRule) {
+      ruleset = list.pop() as GroupedRule
+      identifier = ruleset.identifier
+    } else {
+      ruleset = this.context.mode === 'grouped' ? new GroupedRule(this.context) : new AtomicRule(this.context)
+    }
+
+    list.forEach((styles) => {
       if (!styles) return
-      ruleset.process({ styles })
+      ruleset.process({ styles, identifier })
     })
   }
 
@@ -100,17 +111,26 @@ export class Stylesheet {
   }
 
   processAtomicRecipe = (recipe: Pick<RecipeConfig, 'base' | 'variants' | 'compoundVariants'>) => {
+    const isGrouped = this.context.mode === 'grouped'
+    const ruleset = isGrouped ? new GroupedRule(this.context) : undefined
+    if (isGrouped && ruleset) {
+      // TODO unhashed identifier
+      ruleset.identifier = ruleset.groupedHashFn(recipe, '', true)
+    }
+
     const { base = {}, variants = {}, compoundVariants = [] } = recipe
-    this.processAtomic(base)
+    this.processAtomic(base, ruleset)
     for (const variant of Object.values(variants)) {
       for (const styles of Object.values(variant)) {
-        this.processAtomic(styles)
+        this.processAtomic(styles, ruleset)
       }
     }
 
     compoundVariants.forEach((compoundVariant) => {
-      this.processAtomic(compoundVariant.css)
+      this.processAtomic(compoundVariant.css, ruleset)
     })
+
+    ruleset && console.log(ruleset?.toCss())
   }
 
   toCss = ({ optimize = false, minify }: { optimize?: boolean; minify?: boolean } = {}) => {

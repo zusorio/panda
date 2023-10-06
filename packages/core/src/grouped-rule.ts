@@ -15,19 +15,22 @@ import type { ConditionalRule } from './conditional-rule'
 
 export interface ProcessOptions {
   styles: Dict
+  identifier?: string
 }
 
 export class GroupedRule {
   root: postcss.Root
   layer: string
+  rule = postcss.rule()
+  identifier = ''
 
   constructor(private context: StylesheetContext) {
     this.root = postcss.root()
     this.layer = context.layers.utilities
   }
 
-  groupedHashFn = (styles: Dict, classList: string) => {
-    const className = this.context.hash ? toHash(JSON.stringify(styles)) : classList
+  groupedHashFn = (styles: Dict, classList: string, forceHash = false) => {
+    const className = this.context.hash || forceHash ? toHash(JSON.stringify(styles)) : classList
     const result = this.context.utility.formatClassName(className)
     return esc(result)
   }
@@ -51,7 +54,6 @@ export class GroupedRule {
     // shouldn't happen, but just in case
     if (typeof styleObject !== 'object') return
 
-    const rule = postcss.rule()
     const classList = [] as string[]
     const rulesToUpdate = [] as Array<[ConditionalRule, conditions: string[]]>
 
@@ -78,7 +80,7 @@ export class GroupedRule {
       const decl = cssRoot.root.nodes
 
       if (conditions.length === 0) {
-        rule.append(decl)
+        this.rule.append(decl)
       } else {
         const condRule = this.context.conditions.rule()
         const clone = [...decl]
@@ -89,9 +91,10 @@ export class GroupedRule {
       }
     })
 
-    rule.selector = `.${this.groupedHashFn(styleObject, Array.from(classList).join('__'))}`
+    const identifier = options.identifier ?? this.groupedHashFn(styleObject, Array.from(classList).join('__'))
+    this.rule.selector = `.${identifier}`
     rulesToUpdate.forEach(([condRule, conditions]) => {
-      condRule.selector = rule.selector
+      condRule.selector = this.rule.selector
       condRule.update()
 
       // apply css conditions
@@ -100,8 +103,8 @@ export class GroupedRule {
       this.root.append(condRule.rule!)
     })
 
-    if (rule.nodes.length > 0) {
-      this.root.append(rule)
+    if (this.rule.nodes.length > 0) {
+      this.root.append(this.rule)
     }
 
     if (this.root.nodes.length === 0) return
