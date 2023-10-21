@@ -27,6 +27,7 @@ export type ComponentProps<T extends ElementType> = DistributiveOmit<ComponentPr
 
 export interface ${componentName}<T extends ElementType, P extends Dict = {}> {
   (props: JsxHTMLProps<ComponentProps<T>, Assign<JsxStyleProps, P>>): JSX.Element
+  (args: { raw: readonly string[] | ArrayLike<string> }): (props: ComponentProps<T>) => JSX.Element
   displayName?: string
 }
 

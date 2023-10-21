@@ -18,7 +18,10 @@ export function generateCssFn(ctx: Context) {
     export declare const css: CssFunction;
     `,
     js: outdent`
-    ${ctx.file.import('createCss, createMergeCss, hypenateProperty, withoutSpace', '../helpers')}
+    ${ctx.file.import(
+      (ctx.withTemplateLiteralSyntax ? 'astish, ' : '') + 'createCss, createMergeCss, hypenateProperty, withoutSpace',
+      '../helpers',
+    )}
     ${ctx.file.import('sortConditions, finalizeConditions', './conditions')}
 
     const utilities = "${utility
@@ -107,7 +110,14 @@ export function generateCssFn(ctx: Context) {
     }
 
     const cssFn = createCss(context)
-    export const css = (...styles) => cssFn(mergeCss(...styles))
+    ${
+      ctx.withTemplateLiteralSyntax
+        ? `export const css = (...styles) => {
+            if (styles.length === 1 && Array.isArray(styles[0])) return cssFn(astish(styles[0][0]))
+            return cssFn(mergeCss(...styles))
+          }`
+        : `export const css = (...styles) => cssFn(mergeCss(...styles))`
+    }
     css.raw = (...styles) => mergeCss(...styles)
 
     export const { mergeCss, assignCss } = createMergeCss(context)

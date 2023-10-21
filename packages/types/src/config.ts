@@ -241,7 +241,7 @@ interface CssgenOptions {
    * The css syntax kind to use
    * @default 'object-literal'
    */
-  syntax?: 'template-literal' | 'object-literal'
+  syntax?: 'template-literal' | 'object-literal' | 'mixed'
 }
 
 interface CodegenOptions {

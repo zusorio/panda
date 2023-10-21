@@ -13,6 +13,7 @@ export default defineConfig({
   preflight: true,
   include: ['./src/**/*.{tsx,jsx}', './pages/**/*.{jsx,tsx}'],
   exclude: [],
+  syntax: 'mixed',
   outdir: 'styled-system',
   jsxFactory: 'panda',
   jsxFramework: 'react',

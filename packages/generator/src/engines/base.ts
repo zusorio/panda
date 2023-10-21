@@ -23,6 +23,7 @@ export const getBaseEngine = (conf: ConfigResultWithHooks) => {
   const theme = config.theme ?? {}
 
   const isTemplateLiteralSyntax = config.syntax === 'template-literal'
+  const withTemplateLiteralSyntax = isTemplateLiteralSyntax || config.syntax === 'mixed'
 
   const hash = {
     tokens: isBool(config.hash) ? config.hash : config.hash?.cssVar,
@@ -115,6 +116,7 @@ export const getBaseEngine = (conf: ConfigResultWithHooks) => {
   return {
     ...conf,
     isTemplateLiteralSyntax,
+    withTemplateLiteralSyntax,
     studio,
     hash,
     prefix,
