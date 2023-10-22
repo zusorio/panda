@@ -126,6 +126,10 @@ export class Token {
       }, this.value)
     }
 
+    if (this.extensions.isNegative) {
+      rawValue = `-${this.originalValue}`
+    }
+
     this.setExtensions({
       rawValue,
     })

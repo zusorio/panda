@@ -1988,6 +1988,12 @@ test("should generate a raw value if it's possible", () => {
               300: { value: '{colors.purple.200}' }, //  200 => DEFAULT => 100 => #A0F
             },
           },
+          spacing: {
+            1: { value: '1rem' },
+            negative: {
+              value: '{spacing.-1}',
+            },
+          },
         },
         semanticTokens: {
           colors: {

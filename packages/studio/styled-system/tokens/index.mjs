@@ -1676,23 +1676,23 @@ const tokens = {
     "variable": "var(--breakpoints-2xl)"
   },
   "shadows.inset": {
-    "value": "var(--shadows-inset)",
+    "value": "inset 0 0 0 1px rgba(255,255,255,0.2)",
     "variable": "var(--shadows-inset)"
   },
   "colors.text": {
-    "value": "var(--colors-text)",
+    "value": "#e5e5e5",
     "variable": "var(--colors-text)"
   },
   "colors.bg": {
-    "value": "var(--colors-bg)",
+    "value": "#171717",
     "variable": "var(--colors-bg)"
   },
   "colors.card": {
-    "value": "var(--colors-card)",
+    "value": "#262626",
     "variable": "var(--colors-card)"
   },
   "colors.border": {
-    "value": "var(--colors-border)",
+    "value": "#404040",
     "variable": "var(--colors-border)"
   },
   "spacing.-1": {
