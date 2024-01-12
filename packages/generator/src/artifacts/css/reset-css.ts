@@ -7,25 +7,31 @@ const css = String.raw
 export function generateResetCss(ctx: Context, sheet: Stylesheet) {
   const { preflight } = ctx.config
   const scope = isObject(preflight) ? preflight.scope : undefined
-  const selector = scope ? `${scope} ` : ''
+
+  const getSelector = (selector: string) => {
+    if (!scope) return selector
+    if (typeof scope === 'function') return scope(selector)
+    return `${scope} ${selector}`
+  }
+
   // prettier-ignore
   const output = css`
-  ${selector}* {
+  ${getSelector('*')} {
     margin: 0;
     padding: 0;
     font: inherit;
   }
 
-  ${selector}*,
-  ${selector}*::before,
-  ${selector}*::after {
+  ${getSelector('*')},
+  ${getSelector('*::before')},
+  ${getSelector('*::after')} {
     box-sizing: border-box;
     border-width: 0;
     border-style: solid;
     border-color: var(--global-color-border, currentColor);
   }
 
-  ${scope || 'html'} {
+  ${getSelector('') || 'html'} {
     line-height: 1.5;
     --font-fallback: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
       'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
@@ -38,7 +44,7 @@ export function generateResetCss(ctx: Context, sheet: Stylesheet) {
     font-family: var(--global-font-body, var(--font-fallback));
   }
 
-  ${selector}hr {
+  ${getSelector('hr')} {
     height: 0;
     color: inherit;
     border-top-width: 1px;
@@ -49,177 +55,177 @@ export function generateResetCss(ctx: Context, sheet: Stylesheet) {
     line-height: inherit;
   }
 
-  ${selector}img {
+  ${getSelector('img')} {
     border-style: none;
   }
 
-  ${selector}img,
-  ${selector}svg,
-  ${selector}video,
-  ${selector}canvas,
-  ${selector}audio,
-  ${selector}iframe,
-  ${selector}embed,
-  ${selector}object {
+  ${getSelector('img')},
+  ${getSelector("svg")},
+  ${getSelector("video")},
+  ${getSelector("canvas")},
+  ${getSelector("audio")},
+  ${getSelector("iframe")},
+  ${getSelector("embed")},
+  ${getSelector("object")} {
     display: block;
     vertical-align: middle;
   }
 
-  ${selector}img,
-  ${selector}video {
+  ${getSelector('img')},
+  ${getSelector("video")} {
     max-width: 100%;
     height: auto;
   }
 
-  ${selector}p,
-  ${selector}h1,
-  ${selector}h2,
-  ${selector}h3,
-  ${selector}h4,
-  ${selector}h5,
-  ${selector}h6 {
+  ${getSelector("p")},
+  ${getSelector("h1")},
+  ${getSelector("h2")},
+  ${getSelector("h3")},
+  ${getSelector("h4")},
+  ${getSelector("h5")},
+  ${getSelector("h6")} {
     overflow-wrap: break-word;
   }
 
-  ${selector}ol,
-  ${selector}ul {
+  ${getSelector("ol")},
+  ${getSelector("ul")} {
     list-style: none;
   }
 
-  ${selector}code,
-  ${selector}kbd,
-  ${selector}pre,
-  ${selector}samp {
+  ${getSelector("code")},
+  ${getSelector("kbd")},
+  ${getSelector("pre")},
+  ${getSelector("samp")} {
     font-size: 1em;
   }
 
-  ${selector}button,
-  ${selector}[type='button'],
-  ${selector}[type='reset'],
-  ${selector}[type='submit'] {
+  ${getSelector("button")},
+  ${getSelector("[type='button']")},
+  ${getSelector("[type='reset']")},
+  ${getSelector("[type='submit']")} {
     -webkit-appearance: button;
     background-color: transparent;
     background-image: none;
   }
 
-  ${selector}button,
-  ${selector}input,
-  ${selector}optgroup,
-  ${selector}select,
-  ${selector}textarea {
+  ${getSelector("button")},
+  ${getSelector("input")},
+  ${getSelector("optgroup")},
+  ${getSelector("select")},
+  ${getSelector("textarea")} {
     color: inherit;
   }
 
-  ${selector}button,
-  ${selector}select {
+  ${getSelector("button")},
+  ${getSelector("select")} {
     text-transform: none;
   }
 
-  ${selector}table {
+  ${getSelector("table")} {
     text-indent: 0;
     border-color: inherit;
     border-collapse: collapse;
   }
 
-  ${selector}input::placeholder,
-  ${selector}textarea::placeholder {
+  ${getSelector("input::placeholder")},
+  ${getSelector("textarea::placeholder")} {
     opacity: 1;
     color: var(--global-color-placeholder, #9ca3af);
   }
 
-  ${selector}textarea {
+  ${getSelector("textarea")} {
     resize: vertical;
   }
 
-  ${selector}summary {
+  ${getSelector("summary")} {
     display: list-item;
   }
 
-  ${selector}small {
+  ${getSelector("small")} {
     font-size: 80%;
   }
 
-  ${selector}sub,
-  ${selector}sup {
+  ${getSelector("sub")},
+  ${getSelector("sup")} {
     font-size: 75%;
     line-height: 0;
     position: relative;
     vertical-align: baseline;
   }
 
-  ${selector}sub {
+  ${getSelector("sub")} {
     bottom: -0.25em;
   }
 
-  ${selector}sup {
+  ${getSelector("sup")} {
     top: -0.5em;
   }
 
-  ${selector}dialog {
+  ${getSelector("dialog")} {
     padding: 0;
   }
 
-  ${selector}a {
+  ${getSelector("a")} {
     color: inherit;
     text-decoration: inherit;
   }
 
-  ${selector}abbr:where([title]) {
+  ${getSelector("abbr:where([title])")} {
     text-decoration: underline dotted;
   }
 
-  ${selector}b,
-  ${selector}strong {
+  ${getSelector("b")},
+  ${getSelector("strong")} {
     font-weight: bolder;
   }
 
-  ${selector}code,
-  ${selector}kbd,
-  ${selector}samp,
-  ${selector}pre {
+  ${getSelector("code")},
+  ${getSelector("kbd")},
+  ${getSelector("samp")},
+  ${getSelector("pre")} {
     font-size: 1em;
     --font-mono-fallback: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New';
     font-family: var(--global-font-mono, var(--font-mono-fallback));
   }
 
 
-  ${selector}input[type="text"],
-  ${selector}input[type="email"],
-  ${selector}input[type="search"],
-  ${selector}input[type="password"] {
+  ${getSelector("input[type='text']")},
+  ${getSelector("input[type='email']")},
+  ${getSelector("input[type='search']")},
+  ${getSelector("input[type='password']")} {
     -webkit-appearance: none;
     -moz-appearance: none;
   }
 
-  ${selector}input[type='search'] {
+  ${getSelector("input[type='search']")} {
     -webkit-appearance: textfield;
     outline-offset: -2px;
   }
 
-  ${selector}::-webkit-search-decoration,
-  ${selector}::-webkit-search-cancel-button {
+  ${getSelector("::-webkit-search-decoration")},
+  ${getSelector("::-webkit-search-cancel-button")} {
     -webkit-appearance: none;
   }
 
-  ${selector}::-webkit-file-upload-button {
+  ${getSelector("::-webkit-file-upload-button")} {
     -webkit-appearance: button;
     font: inherit;
   }
 
-  ${selector}input[type="number"]::-webkit-inner-spin-button,
-  ${selector}input[type="number"]::-webkit-outer-spin-button {
+  ${getSelector("input[type='number']::-webkit-inner-spin-button")},
+  ${getSelector("input[type='number']::-webkit-outer-spin-button")} {
     height: auto;
   }
 
-  ${selector}input[type='number']{
+  ${getSelector("input[type='number']")}{
     -moz-appearance: textfield;
   }
 
-  ${selector}:-moz-ui-invalid {
+  ${getSelector(":-moz-ui-invalid")} {
     box-shadow: none;
   }
 
-  ${selector}:-moz-focusring {
+  ${getSelector(":-moz-focusring")} {
     outline: auto;
   }
 `
