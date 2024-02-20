@@ -69,6 +69,7 @@ const artifactConfigDeps: Record<ArtifactId, ConfigPath[]> = {
   'types-entry': [],
   'types-gen': [],
   'types-gen-system': [],
+  themes: ['themes'].concat(tokens),
 }
 
 // Prepare a list of regex that resolves to an artifact id from a list of config paths
