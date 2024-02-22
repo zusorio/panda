@@ -1,4 +1,5 @@
 import { mergeConfigs } from '@pandacss/config'
+import { utils } from '@pandacss/config/utils'
 import { Generator } from '@pandacss/generator'
 import { PandaContext } from '@pandacss/node'
 import { stringifyJson, parseJson } from '@pandacss/shared'
@@ -35,13 +36,30 @@ export const createGeneratorContext = (userConfig?: Config) => {
 }
 
 export const createContext = (userConfig?: Config) => {
-  const resolvedConfig = (
+  let resolvedConfig = (
     userConfig ? mergeConfigs([userConfig, fixtureDefaults.config]) : fixtureDefaults.config
   ) as UserConfig
 
+  const hooks = userConfig?.hooks ?? {}
+
+  // This allows editing the config before the context is created
+  // since this function is only used in tests, we only look at the user hooks
+  // not the presets hooks, so that we can keep this fn sync
+  if (hooks['config:resolved']) {
+    const result = hooks['config:resolved']({
+      config: resolvedConfig,
+      path: fixtureDefaults.path,
+      dependencies: fixtureDefaults.dependencies,
+      utils,
+    })
+    if (result) {
+      resolvedConfig = result as UserConfig
+    }
+  }
+
   return new PandaContext({
     ...fixtureDefaults,
-    hooks: userConfig?.hooks ?? {},
+    hooks,
     config: resolvedConfig,
     tsconfig: {
       // @ts-expect-error
