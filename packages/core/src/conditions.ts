@@ -152,7 +152,7 @@ export class Conditions {
 
   get = (key: string) => {
     const details = this.values[key]
-    return details.raw
+    return details?.raw
   }
 
   getRaw = (condNameOrQuery: ConditionQuery): ConditionDetails | undefined => {
