@@ -1,5 +1,17 @@
 # @pandacss/studio
 
+## 0.32.2
+
+### Patch Changes
+
+- Updated dependencies [e855c64]
+  - @pandacss/token-dictionary@0.32.2
+  - @pandacss/astro-plugin-studio@0.32.2
+  - @pandacss/config@0.32.2
+  - @pandacss/logger@0.32.2
+  - @pandacss/shared@0.32.2
+  - @pandacss/types@0.32.2
+
 ## 0.32.1
 
 ### Patch Changes

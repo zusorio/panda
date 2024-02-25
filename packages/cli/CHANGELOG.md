@@ -1,5 +1,22 @@
 # @pandacss/dev
 
+## 0.32.2
+
+### Patch Changes
+
+- 1968da5: Allow dynamically recording profiling session by pressing the `p` key in your terminal when using the
+  `--cpu-prof` flag for long-running sessions (with `-w` or `--watch` for `panda` / `panda cssgen` / `panda codegen`).
+- Updated dependencies [1968da5]
+- Updated dependencies [e855c64]
+  - @pandacss/node@0.32.2
+  - @pandacss/token-dictionary@0.32.2
+  - @pandacss/postcss@0.32.2
+  - @pandacss/config@0.32.2
+  - @pandacss/logger@0.32.2
+  - @pandacss/preset-panda@0.32.2
+  - @pandacss/shared@0.32.2
+  - @pandacss/types@0.32.2
+
 ## 0.32.1
 
 ### Patch Changes

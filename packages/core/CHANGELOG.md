@@ -1,5 +1,18 @@
 # @pandacss/core
 
+## 0.32.2
+
+### Patch Changes
+
+- 4736057: Fix an issue with recipes that lead to in-memory duplication the resulting CSS, which would increase the time
+  taken to output the CSS after each extraction in the same HMR session (by a few ms).
+- Updated dependencies [e855c64]
+  - @pandacss/token-dictionary@0.32.2
+  - @pandacss/is-valid-prop@0.32.2
+  - @pandacss/logger@0.32.2
+  - @pandacss/shared@0.32.2
+  - @pandacss/types@0.32.2
+
 ## 0.32.1
 
 ### Patch Changes

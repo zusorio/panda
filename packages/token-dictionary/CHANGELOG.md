@@ -1,5 +1,14 @@
 # @pandacss/token-dictionary
 
+## 0.32.2
+
+### Patch Changes
+
+- e855c64: Fix svg token asset quotes
+  - @pandacss/logger@0.32.2
+  - @pandacss/shared@0.32.2
+  - @pandacss/types@0.32.2
+
 ## 0.32.1
 
 ### Patch Changes
